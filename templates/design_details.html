@@ -1,0 +1,524 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ design.title }} | InteriorSpace
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/design_details.css') }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<section class="design-details-page">
+
+    <div class="design-details-container">
+
+        <!-- Back button -->
+
+        <a
+            href="{{ url_for('gallery') }}"
+            class="back-button"
+        >
+            <span aria-hidden="true">←</span>
+            Back to Gallery
+        </a>
+
+
+        <!-- Main design showcase -->
+
+        <article class="design-details-card">
+
+            <div class="design-details-image-area">
+
+                <img
+                    src="{{ url_for('static', filename='images/' + design.image) }}"
+                    alt="{{ design.title }}"
+                    class="design-details-image gallery-popup-image"
+                    data-caption="{{ design.title }}"
+                >
+
+                <div class="design-image-gradient"></div>
+
+                <span class="design-category-badge">
+                    {{ design.category }}
+                </span>
+
+                <button
+                    type="button"
+                    class="open-image-button"
+                    aria-label="Open {{ design.title }} image"
+                >
+                    <span aria-hidden="true">⛶</span>
+                    View Image
+                </button>
+
+            </div>
+
+
+            <div class="design-details-content">
+
+                <p class="section-label">
+                    Luxury Interior Collection
+                </p>
+
+                <h1>
+                    {{ design.title }}
+                </h1>
+
+                <p class="design-details-description">
+                    {{ design.description }}
+                </p>
+
+
+                <div class="design-information">
+
+                    <article class="info-card">
+
+                        <span class="info-number">
+                            01
+                        </span>
+
+                        <h2>
+                            Category
+                        </h2>
+
+                        <p>
+                            {{ design.category }}
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <span class="info-number">
+                            02
+                        </span>
+
+                        <h2>
+                            Project Type
+                        </h2>
+
+                        <p>
+                            Premium Interior
+                        </p>
+
+                    </article>
+
+
+                    <article class="info-card">
+
+                        <span class="info-number">
+                            03
+                        </span>
+
+                        <h2>
+                            Design Style
+                        </h2>
+
+                        <p>
+                            Modern Luxury
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <div class="design-details-actions">
+
+                    <a
+                        href="{{ url_for('custom_request') }}"
+                        class="design-primary-button"
+                    >
+                        Request Similar Design
+                        <span aria-hidden="true">→</span>
+                    </a>
+
+                    <a
+                        href="{{ url_for('gallery') }}"
+                        class="design-secondary-button"
+                    >
+                        Explore More Designs
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- Similar photos -->
+
+        {% if design.similar_images %}
+
+            <section class="similar-photos-section">
+
+                <div class="similar-photos-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            Design Inspiration
+                        </p>
+
+                        <h2>
+                            Similar Photos
+                        </h2>
+
+                    </div>
+
+                    <p>
+                        Click any image to open the complete
+                        full-screen design gallery.
+                    </p>
+
+                </div>
+
+
+                <div class="similar-photos-grid">
+
+                    {% for similar_image in design.similar_images %}
+
+                        <button
+                            type="button"
+                            class="similar-photo-button"
+                            aria-label="Open similar photo {{ loop.index }}"
+                        >
+
+                            <img
+                                src="{{ url_for('static', filename='images/' + similar_image.image) }}"
+                                alt="Similar photo {{ loop.index }} for {{ design.title }}"
+                                class="similar-photo-image gallery-popup-image"
+                                data-caption="{{ design.title }} — Photo {{ loop.index + 1 }}"
+                            >
+
+                            <span class="similar-photo-overlay"></span>
+
+                            <span class="similar-photo-number">
+                                {% if loop.index < 10 %}
+                                    0{{ loop.index }}
+                                {% else %}
+                                    {{ loop.index }}
+                                {% endif %}
+                            </span>
+
+                            <span class="similar-photo-view">
+                                View Photo
+                                <span aria-hidden="true">↗</span>
+                            </span>
+
+                        </button>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FULL-SCREEN IMAGE CAROUSEL
+===================================================== -->
+
+<div
+    id="imageCarouselModal"
+    class="image-carousel-modal"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Interior design image gallery"
+>
+
+    <button
+        type="button"
+        id="carouselClose"
+        class="carousel-close"
+        aria-label="Close image gallery"
+    >
+        &times;
+    </button>
+
+
+    <button
+        type="button"
+        id="carouselPrevious"
+        class="carousel-navigation carousel-previous"
+        aria-label="Previous image"
+    >
+        &#10094;
+    </button>
+
+
+    <div class="carousel-image-wrapper">
+
+        <img
+            id="carouselImage"
+            class="carousel-image"
+            src=""
+            alt=""
+        >
+
+        <div class="carousel-information">
+
+            <p
+                id="carouselCaption"
+                class="carousel-caption"
+            ></p>
+
+            <p
+                id="carouselCounter"
+                class="carousel-counter"
+            ></p>
+
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="carouselNext"
+        class="carousel-navigation carousel-next"
+        aria-label="Next image"
+    >
+        &#10095;
+    </button>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+    const galleryImages = Array.from(
+        document.querySelectorAll(".gallery-popup-image")
+    );
+
+    const carouselModal = document.getElementById(
+        "imageCarouselModal"
+    );
+
+    const carouselImage = document.getElementById(
+        "carouselImage"
+    );
+
+    const carouselCaption = document.getElementById(
+        "carouselCaption"
+    );
+
+    const carouselCounter = document.getElementById(
+        "carouselCounter"
+    );
+
+    const carouselClose = document.getElementById(
+        "carouselClose"
+    );
+
+    const carouselPrevious = document.getElementById(
+        "carouselPrevious"
+    );
+
+    const carouselNext = document.getElementById(
+        "carouselNext"
+    );
+
+    const openImageButton = document.querySelector(
+        ".open-image-button"
+    );
+
+    let currentImageIndex = 0;
+
+
+    function showCarouselImage(index) {
+
+        if (galleryImages.length === 0) {
+            return;
+        }
+
+        if (index < 0) {
+
+            currentImageIndex =
+                galleryImages.length - 1;
+
+        } else if (index >= galleryImages.length) {
+
+            currentImageIndex = 0;
+
+        } else {
+
+            currentImageIndex = index;
+
+        }
+
+        const selectedImage =
+            galleryImages[currentImageIndex];
+
+        carouselImage.src =
+            selectedImage.src;
+
+        carouselImage.alt =
+            selectedImage.alt;
+
+        carouselCaption.textContent =
+            selectedImage.dataset.caption ||
+            selectedImage.alt;
+
+        carouselCounter.textContent =
+            `${currentImageIndex + 1} / ${galleryImages.length}`;
+    }
+
+
+    function openCarousel(index) {
+
+        showCarouselImage(index);
+
+        carouselModal.classList.add("active");
+
+        carouselModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
+        carouselClose.focus();
+    }
+
+
+    function closeCarousel() {
+
+        carouselModal.classList.remove("active");
+
+        carouselModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.classList.remove(
+            "modal-open"
+        );
+    }
+
+
+    function showPreviousImage() {
+        showCarouselImage(
+            currentImageIndex - 1
+        );
+    }
+
+
+    function showNextImage() {
+        showCarouselImage(
+            currentImageIndex + 1
+        );
+    }
+
+
+    galleryImages.forEach(
+        (image, index) => {
+
+            image.addEventListener(
+                "click",
+                () => {
+                    openCarousel(index);
+                }
+            );
+
+        }
+    );
+
+
+    if (openImageButton) {
+
+        openImageButton.addEventListener(
+            "click",
+            () => {
+                openCarousel(0);
+            }
+        );
+
+    }
+
+
+    carouselPrevious.addEventListener(
+        "click",
+        showPreviousImage
+    );
+
+
+    carouselNext.addEventListener(
+        "click",
+        showNextImage
+    );
+
+
+    carouselClose.addEventListener(
+        "click",
+        closeCarousel
+    );
+
+
+    carouselModal.addEventListener(
+        "click",
+        (event) => {
+
+            if (event.target === carouselModal) {
+                closeCarousel();
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                carouselModal.getAttribute(
+                    "aria-hidden"
+                ) === "true"
+            ) {
+                return;
+            }
+
+            if (event.key === "Escape") {
+                closeCarousel();
+            }
+
+            if (event.key === "ArrowLeft") {
+                showPreviousImage();
+            }
+
+            if (event.key === "ArrowRight") {
+                showNextImage();
+            }
+
+        }
+    );
+
+</script>
+
+{% endblock %}

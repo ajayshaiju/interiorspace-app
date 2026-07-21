@@ -1,0 +1,1377 @@
+/* =====================================================
+   CUSTOM REQUEST PAGE
+===================================================== */
+
+.custom-request-page{
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(circle at top right,
+        rgba(0,224,184,.08),
+        transparent 35%),
+
+        radial-gradient(circle at bottom left,
+        rgba(255,215,0,.05),
+        transparent 45%),
+
+        #090909;
+
+}
+
+
+/* =====================================================
+   HERO SECTION
+===================================================== */
+
+.custom-request-hero{
+
+    position:relative;
+
+    min-height:560px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    padding:90px 20px;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,.65),
+            rgba(0,0,0,.78)
+        ),
+        url("../images/gallery-banner.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+}
+
+
+.custom-request-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(0,224,184,.14),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            rgba(255,215,0,.08),
+            transparent 45%
+        );
+
+}
+
+
+.custom-request-hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    width:90%;
+
+    max-width:900px;
+
+}
+
+
+.custom-request-eyebrow{
+
+    display:inline-block;
+
+    padding:10px 24px;
+
+    border-radius:50px;
+
+    color:#FFD700;
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,215,0,.35);
+
+    backdrop-filter:blur(12px);
+
+}
+
+
+.custom-request-hero h1{
+
+    margin:28px 0 20px;
+
+    color:#ffffff;
+
+    font-size:clamp(2.8rem,5vw,4.5rem);
+
+    line-height:1.1;
+
+}
+
+
+.custom-request-hero p{
+
+    max-width:720px;
+
+    margin:auto;
+
+    color:#dddddd;
+
+    line-height:1.9;
+
+    font-size:1.05rem;
+
+}
+/* =====================================================
+   MAIN SECTION
+===================================================== */
+
+.custom-request-section{
+
+    width:92%;
+
+    max-width:1450px;
+
+    margin:80px auto;
+
+}
+
+
+.custom-request-layout{
+
+    display:grid;
+
+    grid-template-columns:380px 1fr;
+
+    gap:40px;
+
+    align-items:start;
+
+}
+/* =====================================================
+   LEFT INFORMATION PANEL
+===================================================== */
+
+.custom-request-info {
+    position: sticky;
+    top: 110px;
+    padding: 38px;
+    overflow: hidden;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.10),
+            rgba(255, 255, 255, 0.04)
+        );
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/* Decorative glow */
+
+.custom-request-info::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    top: -90px;
+    right: -90px;
+    border-radius: 50%;
+    background: rgba(0, 224, 184, 0.16);
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+.custom-request-info::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    bottom: -85px;
+    left: -80px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.10);
+    filter: blur(12px);
+    pointer-events: none;
+}
+
+.custom-request-info > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Small heading */
+
+.custom-request-small-label {
+    margin: 0 0 12px;
+    color: #d6b45d;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+}
+
+
+/* Main title */
+
+.custom-request-info h2 {
+    margin: 0 0 18px;
+    color: #ffffff;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    line-height: 1.2;
+}
+
+
+/* Description */
+
+.custom-request-info-description {
+    margin: 0 0 34px;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 0.96rem;
+    line-height: 1.8;
+}
+
+
+/* Individual steps */
+
+.custom-request-step {
+    position: relative;
+    display: flex;
+    gap: 17px;
+    margin-bottom: 28px;
+    padding-bottom: 4px;
+}
+
+.custom-request-step:not(:last-of-type)::after {
+    content: "";
+    position: absolute;
+    top: 46px;
+    left: 21px;
+    width: 1px;
+    height: calc(100% - 20px);
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(214, 180, 93, 0.55),
+            rgba(0, 224, 184, 0.10)
+        );
+}
+
+
+/* Step number circle */
+
+.custom-request-step-icon {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    color: #080808;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    font-weight: 900;
+    background:
+        linear-gradient(
+            135deg,
+            #f3df9c,
+            #b98a25
+        );
+    box-shadow:
+        0 10px 25px rgba(214, 180, 93, 0.25),
+        0 0 0 6px rgba(214, 180, 93, 0.07);
+}
+
+
+/* Step content */
+
+.custom-request-step h3 {
+    margin: 2px 0 7px;
+    color: #ffffff;
+    font-size: 1.03rem;
+}
+
+.custom-request-step p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.64);
+    font-size: 0.9rem;
+    line-height: 1.65;
+}
+
+
+/* Information note */
+
+.custom-request-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    margin-top: 34px;
+    padding: 18px;
+    border: 1px solid rgba(0, 224, 184, 0.18);
+    border-radius: 16px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 224, 184, 0.10),
+            rgba(255, 255, 255, 0.04)
+        );
+}
+
+.custom-request-note-icon {
+    flex: 0 0 auto;
+    font-size: 1.35rem;
+}
+
+.custom-request-note p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+
+/* Hover animation */
+
+.custom-request-step {
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.custom-request-step:hover {
+    transform: translateX(5px);
+}
+
+.custom-request-step:hover .custom-request-step-icon {
+    box-shadow:
+        0 12px 30px rgba(214, 180, 93, 0.35),
+        0 0 0 7px rgba(214, 180, 93, 0.09);
+}
+/* =====================================================
+   PREMIUM FORM CARD
+===================================================== */
+
+.custom-request-form-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:50px;
+
+    border-radius:28px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(28,28,28,.96),
+            rgba(18,18,18,.98)
+        );
+
+    box-shadow:
+
+        0 30px 80px rgba(0,0,0,.45);
+
+}
+
+
+/* Decorative Glow */
+
+.custom-request-form-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+
+    height:280px;
+
+    top:-120px;
+
+    right:-120px;
+
+    border-radius:50%;
+
+    background:rgba(0,224,184,.12);
+
+    filter:blur(15px);
+
+}
+
+.custom-request-form-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:220px;
+
+    height:220px;
+
+    bottom:-100px;
+
+    left:-90px;
+
+    border-radius:50%;
+
+    background:rgba(255,215,0,.08);
+
+    filter:blur(18px);
+
+}
+
+.custom-request-form-card>*{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+/* =====================================================
+   FORM HEADER
+===================================================== */
+
+.custom-request-form-heading{
+
+    margin-bottom:40px;
+
+    padding-bottom:25px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.custom-request-form-heading .custom-request-small-label{
+
+    color:#FFD700;
+
+}
+
+.custom-request-form-heading h2{
+
+    margin:10px 0;
+
+    color:#ffffff;
+
+    font-size:2.2rem;
+
+    font-weight:700;
+
+}
+
+.custom-request-form-heading p{
+
+    color:#bdbdbd;
+
+    line-height:1.8;
+
+}
+
+
+/* =====================================================
+   FORM LAYOUT
+===================================================== */
+
+.custom-form-row{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+}
+
+.custom-form-group{
+
+    margin-bottom:25px;
+
+}
+
+
+/* =====================================================
+   LABELS
+===================================================== */
+
+.custom-form-group label{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:#ffffff;
+
+    font-size:.95rem;
+
+    font-weight:600;
+
+}
+
+.custom-form-group label span{
+
+    color:#FFD700;
+
+}
+/* =====================================================
+   PREMIUM INPUTS
+===================================================== */
+
+.custom-input-wrapper{
+    position:relative;
+}
+
+.custom-input-icon{
+
+    position:absolute;
+
+    top:50%;
+
+    left:18px;
+
+    transform:translateY(-50%);
+
+    color:#FFD700;
+
+    font-size:18px;
+
+    pointer-events:none;
+
+    transition:.35s;
+
+}
+
+
+/* Textbox & Dropdown */
+
+.custom-request-form input,
+.custom-request-form select{
+
+    width:100%;
+
+    height:58px;
+
+    padding:0 18px 0 55px;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.05);
+
+    color:#ffffff;
+
+    font-size:15px;
+
+    transition:.35s;
+
+    backdrop-filter:blur(12px);
+
+}
+
+
+/* Textarea */
+
+.custom-request-form textarea{
+
+    width:100%;
+
+    min-height:170px;
+
+    padding:18px;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.05);
+
+    color:#ffffff;
+
+    font-size:15px;
+
+    line-height:1.8;
+
+    resize:vertical;
+
+    transition:.35s;
+
+}
+
+
+/* Placeholder */
+
+.custom-request-form input::placeholder,
+.custom-request-form textarea::placeholder{
+
+    color:#9d9d9d;
+
+}
+
+
+/* Dropdown option */
+
+.custom-request-form option{
+
+    background:#181818;
+
+    color:white;
+
+}
+
+
+/* Focus */
+
+.custom-request-form input:focus,
+.custom-request-form select:focus,
+.custom-request-form textarea:focus{
+
+    outline:none;
+
+    border-color:#FFD700;
+
+    background:rgba(255,255,255,.08);
+
+    box-shadow:
+
+        0 0 0 4px rgba(255,215,0,.12),
+
+        0 0 25px rgba(0,224,184,.10);
+
+}
+
+
+/* Icon animation */
+
+.custom-input-wrapper:focus-within .custom-input-icon{
+
+    color:#00E0B8;
+
+    transform:translateY(-50%) scale(1.15);
+
+}
+
+
+/* Help text */
+
+.custom-field-help{
+
+    display:block;
+
+    margin-top:8px;
+
+    color:#9c9c9c;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+}
+/* =====================================================
+   SUBMIT AREA
+===================================================== */
+
+.custom-request-submit-area{
+
+    margin-top:40px;
+
+    padding-top:30px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.custom-request-submit-area p{
+
+    margin-bottom:25px;
+
+    color:#a8a8a8;
+
+    line-height:1.8;
+
+    font-size:.95rem;
+
+}
+
+
+/* =====================================================
+   SUBMIT BUTTON
+===================================================== */
+
+.custom-request-submit-button{
+
+    position:relative;
+
+    width:100%;
+
+    height:60px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:16px;
+
+    overflow:hidden;
+
+    border:none;
+
+    border-radius:16px;
+
+    color:#111111;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    cursor:pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #FFD700,
+            #E6C200,
+            #B8860B
+        );
+
+    box-shadow:
+        0 18px 45px rgba(255,215,0,.28);
+
+    transition:.35s;
+
+}
+
+
+/* Shine animation */
+
+.custom-request-submit-button::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:60%;
+
+    height:100%;
+
+    transform:skewX(-25deg);
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(255,255,255,.45),
+            transparent
+        );
+
+    transition:.7s;
+
+}
+
+.custom-request-submit-button:hover::before{
+
+    left:150%;
+
+}
+
+
+/* Hover */
+
+.custom-request-submit-button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+
+        0 25px 60px rgba(255,215,0,.35),
+
+        0 0 25px rgba(0,224,184,.18);
+
+}
+
+
+/* Click */
+
+.custom-request-submit-button:active{
+
+    transform:scale(.98);
+
+}
+
+
+/* Arrow */
+
+.custom-submit-arrow{
+
+    font-size:22px;
+
+    transition:.35s;
+
+}
+
+.custom-request-submit-button:hover .custom-submit-arrow{
+
+    transform:translateX(8px);
+
+}
+
+
+/* Keyboard */
+
+.custom-request-submit-button:focus-visible{
+
+    outline:none;
+
+    box-shadow:
+
+        0 0 0 4px rgba(255,215,0,.18),
+
+        0 18px 45px rgba(255,215,0,.35);
+
+}/* =====================================================
+   FLOATING ANIMATIONS
+===================================================== */
+
+@keyframes floatCard{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+.custom-request-info{
+
+    animation:floatCard 7s ease-in-out infinite;
+
+}
+
+
+/* =====================================================
+   FADE ANIMATION
+===================================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.custom-request-hero-content,
+.custom-request-info,
+.custom-request-form-card{
+
+    animation:fadeUp .8s ease forwards;
+
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+.custom-request-form textarea::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.custom-request-form textarea::-webkit-scrollbar-track{
+
+    background:#1b1b1b;
+
+    border-radius:20px;
+
+}
+
+.custom-request-form textarea::-webkit-scrollbar-thumb{
+
+    background:#D4AF37;
+
+    border-radius:20px;
+
+}
+
+.custom-request-form textarea::-webkit-scrollbar-thumb:hover{
+
+    background:#FFD700;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width:1200px){
+
+    .custom-request-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .custom-request-info{
+
+        position:relative;
+
+        top:0;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .custom-request-section{
+
+        width:94%;
+
+        margin:60px auto;
+
+    }
+
+    .custom-request-hero{
+
+        min-height:430px;
+
+        padding:90px 20px;
+
+    }
+
+    .custom-request-hero h1{
+
+        font-size:2.3rem;
+
+    }
+
+    .custom-request-form-card{
+
+        padding:30px;
+
+    }
+
+    .custom-form-row{
+
+        grid-template-columns:1fr;
+
+        gap:0;
+
+    }
+
+}
+
+@media (max-width:576px){
+
+    .custom-request-info{
+
+        padding:25px;
+
+    }
+
+    .custom-request-form-card{
+
+        padding:25px;
+
+    }
+
+    .custom-request-submit-button{
+
+        height:55px;
+
+        font-size:15px;
+
+    }
+
+}
+
+
+/* =====================================================
+   SMOOTH TRANSITIONS
+===================================================== */
+
+*{
+
+    transition:
+
+        background .3s,
+
+        border-color .3s,
+
+        box-shadow .3s,
+
+        color .3s,
+
+        transform .3s;
+
+}
+/* =====================================================
+   IMPROVED HOW-IT-WORKS PANEL
+   Add this at the bottom of custom_request.css
+===================================================== */
+
+.custom-request-info {
+    position: sticky;
+    top: 110px;
+    padding: 42px 36px;
+    overflow: hidden;
+
+    color: #ffffff;
+
+    border: 1px solid rgba(214, 180, 93, 0.28);
+    border-radius: 28px;
+
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(0, 224, 184, 0.18),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(20, 24, 23, 0.98),
+            rgba(7, 9, 9, 0.98)
+        );
+
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.45),
+        0 0 35px rgba(0, 224, 184, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    animation: fadeUp 0.8s ease forwards;
+}
+
+
+/* Gold top line */
+
+.custom-request-info::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 35px;
+    right: 35px;
+
+    width: auto;
+    height: 2px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d6b45d,
+            #ffe69a,
+            #d6b45d,
+            transparent
+        );
+
+    filter: none;
+}
+
+
+/* Small decorative teal glow */
+
+.custom-request-info::after {
+    content: "";
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    right: -70px;
+    bottom: -70px;
+    left: auto;
+    top: auto;
+
+    border-radius: 50%;
+
+    background: rgba(0, 224, 184, 0.16);
+    filter: blur(35px);
+
+    pointer-events: none;
+}
+
+
+/* Keep content above glow */
+
+.custom-request-info > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Small heading */
+
+.custom-request-info .custom-request-small-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 0 0 18px;
+    padding: 8px 15px;
+
+    color: #e7c76d;
+
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+
+    border: 1px solid rgba(214, 180, 93, 0.26);
+    border-radius: 50px;
+
+    background: rgba(214, 180, 93, 0.08);
+}
+
+
+/* Main title */
+
+.custom-request-info h2 {
+    margin: 0 0 20px;
+
+    color: #ffffff;
+
+    font-size: clamp(1.9rem, 2.7vw, 2.55rem);
+    font-weight: 750;
+    line-height: 1.2;
+
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.55);
+}
+
+
+/* Intro paragraph */
+
+.custom-request-info-description {
+    margin: 0 0 34px;
+
+    color: rgba(255, 255, 255, 0.74);
+
+    font-size: 0.95rem;
+    line-height: 1.85;
+}
+
+
+/* Individual step */
+
+.custom-request-step {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 17px;
+
+    margin-bottom: 17px;
+    padding: 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 17px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Remove old vertical connecting line */
+
+.custom-request-step:not(:last-of-type)::after {
+    display: none;
+}
+
+
+/* Step number */
+
+.custom-request-step-icon {
+    flex: 0 0 46px;
+
+    width: 46px;
+    height: 46px;
+
+    display: grid;
+    place-items: center;
+
+    color: #090909;
+
+    font-size: 0.95rem;
+    font-weight: 900;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0ae,
+            #d6b45d 50%,
+            #a77b20
+        );
+
+    box-shadow:
+        0 10px 24px rgba(214, 180, 93, 0.24),
+        0 0 0 5px rgba(214, 180, 93, 0.07);
+}
+
+
+/* Step title */
+
+.custom-request-step h3 {
+    margin: 1px 0 6px;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+/* Step paragraph */
+
+.custom-request-step p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.66);
+
+    font-size: 0.87rem;
+    line-height: 1.65;
+}
+
+
+/* Step hover */
+
+.custom-request-step:hover {
+    transform: translateX(6px);
+
+    border-color: rgba(214, 180, 93, 0.35);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(214, 180, 93, 0.09),
+            rgba(0, 224, 184, 0.06)
+        );
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.22);
+}
+
+
+/* Bottom note */
+
+.custom-request-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    margin-top: 28px;
+    padding: 18px;
+
+    border: 1px solid rgba(0, 224, 184, 0.22);
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 224, 184, 0.10),
+            rgba(255, 255, 255, 0.03)
+        );
+}
+
+.custom-request-note p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.74);
+
+    font-size: 0.87rem;
+    line-height: 1.65;
+}
+
+
+/* Mobile adjustment */
+
+@media (max-width: 1200px) {
+    .custom-request-info {
+        position: relative;
+        top: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-request-info {
+        padding: 30px 22px;
+    }
+}

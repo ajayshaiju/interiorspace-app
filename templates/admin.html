@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/admin.css') }}"
+>
+{% endblock %}
+
+{% block title %}
+Admin Panel | InteriorSpace
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-theme-page">
+
+<section class="admin-page">
+
+    <div class="admin-container">
+
+        <div class="admin-header">
+
+            <div>
+                <p class="section-label">
+                    Administration
+                </p>
+
+                <h1>
+                    Manage Interior Designs
+                </h1>
+            </div>
+
+        </div>
+
+        <div class="admin-layout">
+
+            <!-- Add new design form -->
+
+            <section class="admin-form-card">
+
+                <h2>
+                    Add New Design
+                </h2>
+
+                <form
+                    method="post"
+                    enctype="multipart/form-data"
+                >
+
+                    <div class="form-group">
+
+                        <label for="title">
+                            Design Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            placeholder="Example: Modern Living Room"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                            required
+                        >
+
+                            <option value="">
+                                Select a category
+                            </option>
+
+                            <option value="Living Room">
+                                Living Room
+                            </option>
+
+                            <option value="Bedroom">
+                                Bedroom
+                            </option>
+
+                            <option value="Kitchen">
+                                Kitchen
+                            </option>
+
+                            <option value="Office">
+                                Office
+                            </option>
+
+                            <option value="Bathroom">
+                                Bathroom
+                            </option>
+
+                            <option value="Dining Room">
+                                Dining Room
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="5"
+                            placeholder="Describe the interior design"
+                            required
+                        ></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="image">
+                            Upload Main Image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept=".png,.jpg,.jpeg,.webp"
+                            required
+                        >
+
+                        <small>
+                            Allowed formats: PNG, JPG, JPEG and WEBP.
+                        </small>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary form-button"
+                    >
+                        Add Design
+                    </button>
+
+                </form>
+
+            </section>
+
+            <!-- Existing designs -->
+
+            <section class="admin-list-card">
+
+                <h2>
+                    Existing Designs
+                </h2>
+
+                {% if designs %}
+
+                    <div class="admin-design-list">
+
+                        {% for design in designs %}
+
+                            <article class="admin-design-item">
+
+                                <!-- Design information -->
+
+                                <div class="admin-design-info">
+
+                                    <h3>
+                                        {{ design.title }}
+                                    </h3>
+
+                                    <p>
+                                        {{ design.category }}
+                                    </p>
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='images/' + design.image
+                                        ) }}"
+                                        alt="{{ design.title }}"
+                                        class="admin-design-image"
+                                    >
+
+                                    <small>
+                                        Main image: {{ design.image }}
+                                    </small>
+
+                                </div>
+
+                                <!-- Edit and delete design buttons -->
+
+                                <div class="admin-actions">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'edit_design',
+                                            design_id=design.id
+                                        ) }}"
+                                        class="btn btn-small"
+                                    >
+                                        Edit
+                                    </a>
+
+                                    <form
+                                        method="post"
+                                        action="{{ url_for(
+                                            'delete_design',
+                                            design_id=design.id
+                                        ) }}"
+                                        onsubmit="return confirm(
+                                            'Are you sure you want to delete this design and all its photos?'
+                                        );"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-danger btn-small"
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                                <!-- Upload similar photos -->
+
+                                <form
+                                    method="post"
+                                    action="{{ url_for(
+                                        'add_design_images',
+                                        design_id=design.id
+                                    ) }}"
+                                    enctype="multipart/form-data"
+                                    class="similar-images-form"
+                                >
+
+                                    <label for="similar-images-{{ design.id }}">
+                                        Add Similar Photos
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="similar-images-{{ design.id }}"
+                                        name="similar_images"
+                                        accept=".png,.jpg,.jpeg,.webp"
+                                        multiple
+                                        required
+                                    >
+
+                                    <small>
+                                        You can select multiple photos.
+                                    </small>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-small"
+                                    >
+                                        Upload Similar Photos
+                                    </button>
+
+                                </form>
+
+                                <!-- Display uploaded similar photos -->
+
+                                {% if design.similar_images %}
+
+                                    <div class="admin-similar-images">
+
+                                        <h4>
+                                            Uploaded Similar Photos
+                                        </h4>
+
+                                        <div class="admin-similar-images-grid">
+
+                                            {% for similar_image in design.similar_images %}
+
+                                                <div class="admin-similar-image-item">
+
+                                                    <img
+                                                        src="{{ url_for(
+                                                            'static',
+                                                            filename='images/' + similar_image.image
+                                                        ) }}"
+                                                        alt="Similar photo for {{ design.title }}"
+                                                        class="admin-similar-image"
+                                                    >
+
+                                                    <form
+                                                        method="post"
+                                                        action="{{ url_for(
+                                                            'delete_design_image',
+                                                            image_id=similar_image.id
+                                                        ) }}"
+                                                        onsubmit="return confirm(
+                                                            'Are you sure you want to delete this similar photo?'
+                                                        );"
+                                                    >
+
+                                                        <button
+                                                            type="submit"
+                                                            class="btn btn-danger btn-small"
+                                                        >
+                                                            Delete Photo
+                                                        </button>
+
+                                                    </form>
+
+                                                </div>
+
+                                            {% endfor %}
+
+                                        </div>
+
+                                    </div>
+
+                                {% else %}
+
+                                    <p class="no-similar-images">
+                                        No similar photos uploaded yet.
+                                    </p>
+
+                                {% endif %}
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <p>
+                            No interior designs have been added yet.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+{% endblock %}

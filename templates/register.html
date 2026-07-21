@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/register.css') }}"
+>
+{% endblock %}
+
+{% block title %}
+Register | InteriorSpace
+{% endblock %}
+
+{% block content %}
+
+<div class="register-theme-page">
+
+<section class="register-page">
+
+    <div class="register-overlay"></div>
+
+    <div class="register-container">
+
+        <div class="register-left">
+
+            <p class="register-tag">
+                JOIN INTERIORSPACE
+            </p>
+
+            <h1>
+                Create spaces that feel truly yours.
+            </h1>
+
+            <p>
+                Create an account to explore premium interior designs,
+                submit personalized design requests, and track your
+                project progress.
+            </p>
+
+            <div class="register-benefits">
+
+                <div class="register-benefit">
+                    <span>✓</span>
+                    Browse premium interior designs
+                </div>
+
+                <div class="register-benefit">
+                    <span>✓</span>
+                    Submit custom design requests
+                </div>
+
+                <div class="register-benefit">
+                    <span>✓</span>
+                    Track request status and replies
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="register-card">
+
+            <p class="section-label">
+                Create an account
+            </p>
+
+            <h2>Join InteriorSpace</h2>
+
+            <p class="register-description">
+                Enter your details to start your interior-design journey.
+            </p>
+
+            <form method="post" id="registerForm">
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="register-password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            minlength="8"
+                            autocomplete="new-password"
+                            required
+                            oninput="checkPasswordStrength(); checkPasswordMatch();"
+                        >
+
+                        <button
+                            type="button"
+                            class="register-toggle-password"
+                            id="passwordToggle"
+                            onclick="toggleRegisterPassword('password', 'passwordToggle')"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <div class="password-strength-wrapper">
+
+                        <div class="password-strength-bar">
+                            <div
+                                class="password-strength-fill"
+                                id="passwordStrengthFill"
+                            ></div>
+                        </div>
+
+                        <p
+                            class="password-strength-text"
+                            id="passwordStrengthText"
+                        >
+                            Use at least 8 characters.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Confirm password
+                    </label>
+
+                    <div class="register-password-box">
+
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Enter the password again"
+                            minlength="8"
+                            autocomplete="new-password"
+                            required
+                            oninput="checkPasswordMatch()"
+                        >
+
+                        <button
+                            type="button"
+                            class="register-toggle-password"
+                            id="confirmPasswordToggle"
+                            onclick="toggleRegisterPassword(
+                                'confirm_password',
+                                'confirmPasswordToggle'
+                            )"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                    <p
+                        class="password-match-message"
+                        id="passwordMatchMessage"
+                    ></p>
+
+                </div>
+
+                <button
+                    class="register-submit-button"
+                    type="submit"
+                >
+                    <span>Create Account</span>
+                    <span aria-hidden="true">→</span>
+                </button>
+
+            </form>
+
+            <p class="register-footer">
+
+                Already registered?
+
+                <a href="{{ url_for('login') }}">
+                    Login here
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+<script>
+function toggleRegisterPassword(inputId, buttonId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleButton = document.getElementById(buttonId);
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleButton.textContent = "Hide";
+    } else {
+        passwordInput.type = "password";
+        toggleButton.textContent = "Show";
+    }
+}
+
+function checkPasswordStrength() {
+    const password = document.getElementById("password").value;
+    const strengthFill = document.getElementById("passwordStrengthFill");
+    const strengthText = document.getElementById("passwordStrengthText");
+
+    let strength = 0;
+
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[a-z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+    strengthFill.className = "password-strength-fill";
+
+    if (password.length === 0) {
+        strengthFill.style.width = "0%";
+        strengthText.textContent = "Use at least 8 characters.";
+    } else if (strength <= 2) {
+        strengthFill.style.width = "33%";
+        strengthFill.classList.add("strength-weak");
+        strengthText.textContent = "Weak password";
+    } else if (strength <= 4) {
+        strengthFill.style.width = "66%";
+        strengthFill.classList.add("strength-medium");
+        strengthText.textContent = "Medium password";
+    } else {
+        strengthFill.style.width = "100%";
+        strengthFill.classList.add("strength-strong");
+        strengthText.textContent = "Strong password";
+    }
+}
+
+function checkPasswordMatch() {
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+    const message = document.getElementById("passwordMatchMessage");
+
+    message.className = "password-match-message";
+
+    if (confirmPassword.length === 0) {
+        message.textContent = "";
+        return;
+    }
+
+    if (password === confirmPassword) {
+        message.textContent = "✓ Passwords match";
+        message.classList.add("password-match-success");
+    } else {
+        message.textContent = "✕ Passwords do not match";
+        message.classList.add("password-match-error");
+    }
+}
+</script>
+
+{% endblock %}

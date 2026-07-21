@@ -1,0 +1,1330 @@
+/* =====================================================
+   DESIGN DETAILS PAGE
+===================================================== */
+
+.design-details-page{
+
+    min-height:100vh;
+
+    color:#ffffff;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(0,170,140,.08),
+            transparent 35%
+        ),
+        #0b0b0b;
+
+    padding:70px 0 90px;
+
+}
+
+
+.design-details-container{
+
+    width:92%;
+
+    max-width:1450px;
+
+    margin:auto;
+
+}
+
+
+/* =====================================================
+   BACK BUTTON
+===================================================== */
+
+.back-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px 28px;
+
+    margin-bottom:40px;
+
+    color:#ffffff;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    border-radius:50px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(14px);
+
+    transition:.35s;
+
+}
+
+.back-button:hover{
+
+    color:#111;
+
+    background:#FFD700;
+
+    transform:translateY(-3px);
+
+}
+
+
+/* =====================================================
+   MAIN CARD
+===================================================== */
+
+.design-details-card{
+
+    display:grid;
+
+    grid-template-columns:1.1fr .9fr;
+
+    gap:55px;
+
+    align-items:center;
+
+    padding:35px;
+
+    border-radius:32px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.05),
+            rgba(255,255,255,.02)
+        );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+
+}
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.design-details-image-area{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+}
+
+
+.design-details-image{
+
+    width:100%;
+
+    height:650px;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:.7s;
+
+    cursor:pointer;
+
+}
+
+
+.design-details-image:hover{
+
+    transform:scale(1.05);
+
+}
+
+
+.design-image-gradient{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,.55)
+        );
+
+}
+
+
+.design-category-badge{
+
+    position:absolute;
+
+    top:25px;
+
+    left:25px;
+
+    padding:10px 20px;
+
+    border-radius:40px;
+
+    background:
+        rgba(0,0,0,.55);
+
+    border:1px solid rgba(255,215,0,.4);
+
+    color:#FFD700;
+
+    backdrop-filter:blur(12px);
+
+    font-size:.82rem;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+
+.open-image-button{
+
+    position:absolute;
+
+    right:25px;
+
+    bottom:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 24px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:#FFD700;
+
+    color:#111;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.35s;
+
+}
+
+
+.open-image-button:hover{
+
+    transform:translateY(-3px);
+
+}
+/* =====================================================
+   FULL-SCREEN IMAGE POPUP
+===================================================== */
+
+body.modal-open{
+    overflow:hidden;
+}
+
+
+/* Popup background */
+
+.image-carousel-modal{
+    position:fixed;
+
+    inset:0;
+
+    z-index:99999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:40px 90px;
+
+    visibility:hidden;
+    opacity:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,80,70,.18),
+            rgba(0,0,0,.96) 65%
+        );
+
+    backdrop-filter:blur(18px);
+
+    transition:
+        opacity .35s ease,
+        visibility .35s ease;
+}
+
+
+/* Show popup */
+
+.image-carousel-modal.active{
+    visibility:visible;
+    opacity:1;
+}
+
+
+/* Image container */
+
+.carousel-image-wrapper{
+    position:relative;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+
+/* Full-page image */
+
+.carousel-image{
+    display:block;
+
+    width:auto;
+    height:auto;
+
+    max-width:94vw;
+    max-height:88vh;
+
+    object-fit:contain;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.75),
+        0 0 45px rgba(0,224,184,.12);
+
+    animation:carouselImageOpen .4s ease;
+}
+
+
+@keyframes carouselImageOpen{
+
+    from{
+        opacity:0;
+        transform:scale(.94);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+
+/* Caption area */
+
+.carousel-information{
+    position:absolute;
+
+    left:50%;
+    bottom:18px;
+
+    transform:translateX(-50%);
+
+    min-width:260px;
+    max-width:75%;
+
+    padding:12px 24px;
+
+    text-align:center;
+
+    background:rgba(0,0,0,.68);
+
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:50px;
+
+    backdrop-filter:blur(14px);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.45);
+}
+
+
+.carousel-caption{
+    margin:0;
+
+    color:#ffffff;
+
+    font-size:.95rem;
+    font-weight:600;
+}
+
+
+.carousel-counter{
+    margin:5px 0 0;
+
+    color:#ffd700;
+
+    font-size:.82rem;
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+
+/* Close button */
+
+.carousel-close{
+    position:absolute;
+
+    top:24px;
+    right:30px;
+
+    z-index:5;
+
+    width:52px;
+    height:52px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0;
+
+    color:#ffffff;
+
+    font-size:2rem;
+    line-height:1;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:50%;
+
+    backdrop-filter:blur(14px);
+
+    cursor:pointer;
+
+    transition:
+        transform .3s ease,
+        color .3s ease,
+        background .3s ease;
+}
+
+
+.carousel-close:hover{
+    color:#111111;
+
+    background:#ffd700;
+
+    transform:rotate(90deg);
+}
+
+
+/* Previous and next buttons */
+
+.carousel-navigation{
+    position:absolute;
+
+    top:50%;
+
+    z-index:5;
+
+    width:58px;
+    height:58px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0;
+
+    color:#ffffff;
+
+    font-size:1.6rem;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:50%;
+
+    backdrop-filter:blur(14px);
+
+    cursor:pointer;
+
+    transform:translateY(-50%);
+
+    transition:
+        color .3s ease,
+        background .3s ease,
+        transform .3s ease;
+}
+
+
+.carousel-navigation:hover{
+    color:#111111;
+
+    background:#ffd700;
+}
+
+
+.carousel-previous{
+    left:28px;
+}
+
+
+.carousel-next{
+    right:28px;
+}
+
+
+.carousel-previous:hover{
+    transform:
+        translateY(-50%)
+        translateX(-4px);
+}
+
+
+.carousel-next:hover{
+    transform:
+        translateY(-50%)
+        translateX(4px);
+}
+
+
+/* Main image clickable cursor */
+
+.design-details-image{
+    cursor:zoom-in;
+}
+
+
+/* =====================================================
+   POPUP RESPONSIVE
+===================================================== */
+
+@media (max-width:768px){
+
+    .image-carousel-modal{
+        padding:75px 18px 90px;
+    }
+
+    .carousel-image{
+        max-width:96vw;
+        max-height:78vh;
+
+        border-radius:12px;
+    }
+
+    .carousel-close{
+        top:16px;
+        right:16px;
+
+        width:46px;
+        height:46px;
+    }
+
+    .carousel-navigation{
+        top:auto;
+        bottom:20px;
+
+        width:48px;
+        height:48px;
+
+        transform:none;
+    }
+
+    .carousel-previous{
+        left:20px;
+    }
+
+    .carousel-next{
+        right:20px;
+    }
+
+    .carousel-previous:hover,
+    .carousel-next:hover{
+        transform:none;
+    }
+
+    .carousel-information{
+        bottom:22px;
+
+        min-width:180px;
+        max-width:55%;
+
+        padding:10px 15px;
+    }
+
+    .carousel-caption{
+        font-size:.78rem;
+    }
+
+    .carousel-counter{
+        font-size:.72rem;
+    }
+
+}
+/* =====================================================
+   DESIGN DETAILS CONTENT
+===================================================== */
+
+.design-details-content{
+    padding:20px 10px;
+}
+
+
+.design-details-content .section-label{
+    margin:0 0 20px;
+
+    color:#c69165;
+
+    font-size:.86rem;
+    font-weight:750;
+
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+}
+
+
+.design-details-content h1{
+    margin:0 0 24px;
+
+    color:#ffffff;
+
+    font-size:clamp(2.5rem, 4vw, 4.2rem);
+    line-height:1.1;
+
+    text-transform:capitalize;
+}
+
+
+.design-details-description{
+    margin:0 0 38px;
+
+    color:#cfcfcf;
+
+    font-size:1.08rem;
+    line-height:1.9;
+}
+
+
+/* =====================================================
+   DESIGN INFORMATION CARDS
+===================================================== */
+
+.design-information{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap:16px;
+
+    margin-top:32px;
+}
+
+
+.info-card{
+    position:relative;
+
+    min-height:155px;
+
+    padding:24px 20px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.06),
+            rgba(255,255,255,.02)
+        );
+
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:20px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.22);
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+
+.info-card::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd700,
+            #00e0b8
+        );
+
+    opacity:.7;
+}
+
+
+.info-card:hover{
+    transform:translateY(-7px);
+
+    border-color:rgba(255,215,0,.38);
+
+    box-shadow:
+        0 20px 42px rgba(0,0,0,.32),
+        0 0 24px rgba(0,224,184,.10);
+}
+
+
+.info-number{
+    display:block;
+
+    margin-bottom:17px;
+
+    color:#ffd700;
+
+    font-size:.82rem;
+    font-weight:750;
+
+    letter-spacing:1px;
+}
+
+
+.info-card h2{
+    margin:0 0 10px;
+
+    color:#ffffff;
+
+    font-size:1rem;
+    font-weight:700;
+}
+
+
+.info-card p{
+    margin:0;
+
+    color:#bdbdbd;
+
+    font-size:.92rem;
+    line-height:1.5;
+}
+
+
+/* =====================================================
+   DESIGN ACTION BUTTONS
+===================================================== */
+
+.design-details-actions{
+    display:flex;
+    align-items:center;
+
+    gap:16px;
+
+    margin-top:38px;
+
+    flex-wrap:wrap;
+}
+
+
+.design-primary-button,
+.design-secondary-button{
+    min-height:52px;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:12px;
+
+    padding:14px 25px;
+
+    text-decoration:none;
+
+    font-size:.92rem;
+    font-weight:750;
+
+    border-radius:50px;
+
+    transition:
+        transform .35s ease,
+        background .35s ease,
+        color .35s ease,
+        box-shadow .35s ease;
+}
+
+
+.design-primary-button{
+    color:#111111;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd700,
+            #dcae3b
+        );
+
+    border:1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 12px 30px rgba(255,215,0,.18);
+}
+
+
+.design-primary-button:hover{
+    transform:translateY(-4px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe657,
+            #efc44c
+        );
+
+    box-shadow:
+        0 16px 35px rgba(255,215,0,.28);
+}
+
+
+.design-primary-button span{
+    transition:transform .35s ease;
+}
+
+
+.design-primary-button:hover span{
+    transform:translateX(6px);
+}
+
+
+.design-secondary-button{
+    color:#ffffff;
+
+    background:rgba(255,255,255,.045);
+
+    border:1px solid rgba(255,255,255,.12);
+}
+
+
+.design-secondary-button:hover{
+    color:#ffd700;
+
+    transform:translateY(-4px);
+
+    background:rgba(255,255,255,.08);
+
+    border-color:rgba(255,215,0,.38);
+}
+
+
+/* =====================================================
+   CONTENT RESPONSIVE
+===================================================== */
+
+@media (max-width:1150px){
+
+    .design-details-card{
+        grid-template-columns:1fr;
+
+        align-items:stretch;
+    }
+
+    .design-details-image{
+        height:580px;
+    }
+
+    .design-details-content{
+        padding:20px 5px 5px;
+    }
+
+}
+
+
+@media (max-width:760px){
+
+    .design-details-page{
+        padding:45px 0 70px;
+    }
+
+    .design-details-card{
+        gap:32px;
+
+        padding:22px;
+
+        border-radius:24px;
+    }
+
+    .design-details-image{
+        height:440px;
+    }
+
+    .design-information{
+        grid-template-columns:1fr;
+    }
+
+    .info-card{
+        min-height:auto;
+    }
+
+    .design-details-actions{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .design-primary-button,
+    .design-secondary-button{
+        width:100%;
+    }
+
+}
+
+
+@media (max-width:500px){
+
+    .design-details-container{
+        width:92%;
+    }
+
+    .back-button{
+        margin-bottom:28px;
+
+        padding:12px 20px;
+    }
+
+    .design-details-card{
+        padding:16px;
+    }
+
+    .design-details-image{
+        height:350px;
+    }
+
+    .design-details-content h1{
+        font-size:2.35rem;
+    }
+
+    .design-details-description{
+        font-size:1rem;
+    }
+
+}
+/* =====================================================
+   SIMILAR PHOTOS SECTION
+===================================================== */
+
+.similar-photos-section{
+    margin-top:75px;
+}
+
+
+.similar-photos-heading{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) minmax(280px, 480px);
+    align-items:end;
+
+    gap:40px;
+
+    margin-bottom:35px;
+}
+
+
+.similar-photos-heading .section-label{
+    margin:0 0 12px;
+
+    color:#c69165;
+
+    font-size:.82rem;
+    font-weight:750;
+
+    letter-spacing:2.2px;
+    text-transform:uppercase;
+}
+
+
+.similar-photos-heading h2{
+    margin:0;
+
+    color:#ffffff;
+
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    line-height:1.2;
+}
+
+
+.similar-photos-heading > p{
+    margin:0;
+
+    color:#cfcfcf;
+
+    line-height:1.8;
+}
+
+
+/* =====================================================
+   SIMILAR PHOTOS GRID
+===================================================== */
+
+.similar-photos-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap:25px;
+}
+
+
+/* =====================================================
+   SIMILAR PHOTO CARD
+===================================================== */
+
+.similar-photo-button{
+    position:relative;
+
+    height:320px;
+
+    padding:0;
+
+    overflow:hidden;
+
+    color:#ffffff;
+
+    background:#111111;
+
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:24px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 18px 42px rgba(0,0,0,.26);
+
+    transition:
+        transform .4s ease,
+        border-color .4s ease,
+        box-shadow .4s ease;
+}
+
+
+.similar-photo-button:hover{
+    transform:translateY(-9px);
+
+    border-color:rgba(255,215,0,.42);
+
+    box-shadow:
+        0 24px 55px rgba(0,0,0,.42),
+        0 0 30px rgba(0,224,184,.12);
+}
+
+
+.similar-photo-image{
+    width:100%;
+    height:100%;
+
+    display:block;
+
+    object-fit:cover;
+
+    transition:
+        transform .7s ease,
+        filter .7s ease;
+}
+
+
+.similar-photo-button:hover .similar-photo-image{
+    transform:scale(1.1);
+
+    filter:
+        brightness(.72)
+        saturate(1.08);
+}
+
+
+/* =====================================================
+   SIMILAR PHOTO OVERLAY
+===================================================== */
+
+.similar-photo-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.03),
+            rgba(0,0,0,.12) 45%,
+            rgba(0,0,0,.78)
+        );
+
+    pointer-events:none;
+}
+
+
+/* =====================================================
+   SIMILAR PHOTO NUMBER
+===================================================== */
+
+.similar-photo-number{
+    position:absolute;
+
+    top:18px;
+    left:18px;
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#111111;
+
+    font-size:.82rem;
+    font-weight:800;
+
+    background:#ffd700;
+
+    border-radius:50%;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.32);
+
+    transition:
+        transform .35s ease,
+        background .35s ease;
+}
+
+
+.similar-photo-button:hover .similar-photo-number{
+    transform:rotate(-8deg) scale(1.08);
+
+    background:#00e0b8;
+}
+
+
+/* =====================================================
+   VIEW PHOTO LABEL
+===================================================== */
+
+.similar-photo-view{
+    position:absolute;
+
+    left:22px;
+    right:22px;
+    bottom:20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:15px;
+
+    padding-top:16px;
+
+    color:#ffffff;
+
+    font-size:.9rem;
+    font-weight:750;
+
+    letter-spacing:.8px;
+    text-transform:uppercase;
+
+    border-top:1px solid rgba(255,255,255,.18);
+
+    transform:translateY(8px);
+
+    transition:
+        color .35s ease,
+        transform .35s ease;
+}
+
+
+.similar-photo-button:hover .similar-photo-view{
+    color:#ffd700;
+
+    transform:translateY(0);
+}
+
+
+.similar-photo-view span{
+    font-size:1.2rem;
+
+    transition:transform .35s ease;
+}
+
+
+.similar-photo-button:hover .similar-photo-view span{
+    transform:
+        translateX(5px)
+        translateY(-4px);
+}
+
+
+/* =====================================================
+   SIMILAR PHOTOS RESPONSIVE
+===================================================== */
+
+@media (max-width:1050px){
+
+    .similar-photos-heading{
+        grid-template-columns:1fr;
+        align-items:start;
+
+        gap:18px;
+    }
+
+    .similar-photos-grid{
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width:700px){
+
+    .similar-photos-section{
+        margin-top:55px;
+    }
+
+    .similar-photos-grid{
+        grid-template-columns:1fr;
+    }
+
+    .similar-photo-button{
+        height:290px;
+    }
+
+}
+
+
+@media (max-width:500px){
+
+    .similar-photo-button{
+        height:240px;
+
+        border-radius:18px;
+    }
+
+    .similar-photo-number{
+        top:14px;
+        left:14px;
+    }
+
+    .similar-photo-view{
+        left:17px;
+        right:17px;
+        bottom:16px;
+
+        font-size:.8rem;
+    }
+
+}
+/* =====================================================
+   IMPROVE SMALL SIMILAR-PHOTO COLLECTIONS
+===================================================== */
+
+.similar-photos-grid{
+    justify-content:center;
+}
+
+
+/* When there is only one photo */
+
+.similar-photos-grid:has(
+    .similar-photo-button:only-child
+){
+    grid-template-columns:
+        minmax(300px, 430px);
+}
+
+
+/* When there are exactly two photos */
+
+.similar-photos-grid:has(
+    .similar-photo-button:first-child:nth-last-child(2)
+){
+    grid-template-columns:
+        repeat(2, minmax(300px, 430px));
+}
+
+
+/* Make single and double cards slightly larger */
+
+.similar-photos-grid:has(
+    .similar-photo-button:only-child
+)
+.similar-photo-button{
+    height:390px;
+}
+
+
+.similar-photos-grid:has(
+    .similar-photo-button:first-child:nth-last-child(2)
+)
+.similar-photo-button{
+    height:360px;
+}
+
+
+/* Better spacing above the footer */
+
+.similar-photos-section{
+    padding-bottom:40px;
+}
+
+
+/* =====================================================
+   MOBILE FIX
+===================================================== */
+
+@media (max-width:700px){
+
+    .similar-photos-grid:has(
+        .similar-photo-button:only-child
+    ),
+    .similar-photos-grid:has(
+        .similar-photo-button:first-child:nth-last-child(2)
+    ){
+        grid-template-columns:1fr;
+    }
+
+    .similar-photos-grid:has(
+        .similar-photo-button:only-child
+    )
+    .similar-photo-button,
+    .similar-photos-grid:has(
+        .similar-photo-button:first-child:nth-last-child(2)
+    )
+    .similar-photo-button{
+        height:300px;
+    }
+
+}

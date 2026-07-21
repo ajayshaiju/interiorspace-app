@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin_requests.css') }}">
+{% endblock %}
+
+{% block title %}
+Customer Requests | InteriorSpace
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-requests-theme-page">
+<section class="admin-requests-page">
+
+    <div class="section-heading">
+        <p class="section-label">Admin Panel</p>
+        <h1>Customer Design Requests</h1>
+        <p>
+            Review each request, send a personal reply, and choose
+            whether to accept or reject it.
+        </p>
+    </div>
+
+    {% if custom_requests %}
+
+        <div class="request-card-grid">
+
+            {% for custom_request in custom_requests %}
+
+                <article class="request-card">
+
+                    <div class="request-card-header">
+
+                        <div>
+                            <h2>{{ custom_request.name }}</h2>
+                            <p>{{ custom_request.email }}</p>
+                        </div>
+
+                        <span
+                            class="request-status
+                            request-status-{{ custom_request.status|lower }}"
+                        >
+                            {{ custom_request.status }}
+                        </span>
+
+                    </div>
+
+                    <div class="request-information">
+
+                        <div class="request-information-item">
+                            <strong>Room Type</strong>
+                            <span>{{ custom_request.room_type }}</span>
+                        </div>
+
+                        <div class="request-information-item">
+                            <strong>Preferred Style</strong>
+                            <span>{{ custom_request.preferred_style }}</span>
+                        </div>
+
+                        <div class="request-information-item">
+                            <strong>Estimated Budget</strong>
+                            <span>{{ custom_request.budget or "Not provided" }}</span>
+                        </div>
+
+                        <div class="request-information-item">
+                            <strong>Submitted On</strong>
+                            <span>
+                                {{ custom_request.created_at.strftime(
+                                    "%d %B %Y, %I:%M %p"
+                                ) }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="request-text-section">
+                        <h3>Customer Requirements</h3>
+                        <p>{{ custom_request.requirements }}</p>
+                    </div>
+
+                    <div class="request-text-section">
+                        <h3>Suggestions and Ideas</h3>
+                        <p>
+                            {{ custom_request.suggestions
+                               or "No additional suggestions provided." }}
+                        </p>
+                    </div>
+
+                    <div class="admin-reply-area">
+
+                        <label for="reply-{{ custom_request.id }}">
+                            Reply to Customer
+                        </label>
+
+                        <textarea
+                            id="reply-{{ custom_request.id }}"
+                            name="admin_message"
+                            rows="4"
+                            placeholder="Write a helpful message that the customer will see on their dashboard..."
+                            form="accept-form-{{ custom_request.id }}"
+                        >{% if custom_request.response %}{{ custom_request.response.admin_message or "" }}{% endif %}</textarea>
+
+                        <p class="admin-reply-help">
+                            The same message is used whether you accept or reject.
+                            Edit it before choosing the status.
+                        </p>
+
+                    </div>
+
+                    <div class="request-actions">
+
+                        <form
+                            method="post"
+                            action="{{ url_for(
+                                'accept_custom_request',
+                                request_id=custom_request.id
+                            ) }}"
+                            class="admin-decision-form"
+                            data-request-id="{{ custom_request.id }}"
+                        >
+                            <input type="hidden"
+                                   name="admin_message"
+                                   class="reply-copy-input">
+
+                            <button
+                                type="submit"
+                                class="request-action-button request-accept-button"
+                            >
+                                ✓ Accept Request
+                            </button>
+                        </form>
+
+                        <form
+                            method="post"
+                            action="{{ url_for(
+                                'reject_custom_request',
+                                request_id=custom_request.id
+                            ) }}"
+                            class="admin-decision-form reject-decision-form"
+                            data-request-id="{{ custom_request.id }}"
+                        >
+                            <input type="hidden"
+                                   name="admin_message"
+                                   class="reply-copy-input">
+
+                            <button
+                                type="submit"
+                                class="request-action-button request-reject-button"
+                            >
+                                ✕ Reject Request
+                            </button>
+                        </form>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <h2>No customer requests yet</h2>
+            <p>Submitted custom design requests will appear here.</p>
+        </div>
+
+    {% endif %}
+
+</section>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const decisionForms = document.querySelectorAll(".admin-decision-form");
+
+    decisionForms.forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const requestId = form.dataset.requestId;
+            const replyField = document.getElementById("reply-" + requestId);
+            const hiddenInput = form.querySelector(".reply-copy-input");
+
+            if (replyField && hiddenInput) {
+                hiddenInput.value = replyField.value;
+            }
+
+            if (form.classList.contains("reject-decision-form")) {
+                const confirmed = confirm(
+                    "Are you sure you want to reject this request?"
+                );
+
+                if (!confirmed) {
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

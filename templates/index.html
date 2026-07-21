@@ -1,0 +1,649 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/index.css') }}"
+>
+
+{% endblock %}
+
+
+{% block title %}
+
+Home | InteriorSpace
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="home-theme-page">
+
+    <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
+
+    <section class="hero-section">
+
+        <div class="hero-grid"></div>
+
+        <div class="hero-glow hero-glow-one"></div>
+        <div class="hero-glow hero-glow-two"></div>
+        <div class="hero-glow hero-glow-three"></div>
+
+
+        <!-- HERO LEFT CONTENT -->
+
+        <div class="hero-content">
+
+            <p class="hero-label">
+                Modern Interior Design
+            </p>
+
+            <h1>
+                Transform Your Space Into
+                <span>Something Extraordinary</span>
+            </h1>
+
+            <p class="hero-description">
+                Explore inspiring interior designs, discover modern room
+                styles, and request personalized design solutions for your
+                home or workspace.
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="{{ url_for('gallery') }}"
+                    class="home-btn home-btn-primary"
+                >
+                    <span>Explore Designs</span>
+                    <span aria-hidden="true">→</span>
+                </a>
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="home-btn home-btn-secondary"
+                >
+                    Create Account
+                </a>
+
+            </div>
+
+
+            <div class="hero-highlights">
+
+                <div>
+                    <strong>Premium</strong>
+                    <span>Interior concepts</span>
+                </div>
+
+                <div>
+                    <strong>Personalized</strong>
+                    <span>Design requests</span>
+                </div>
+
+                <div>
+                    <strong>Modern</strong>
+                    <span>Project experience</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO RIGHT IMAGE -->
+
+        <div class="hero-visual hero-image-visual">
+
+            <div class="hero-image-frame">
+
+                <img
+                    src="{{ url_for('static', filename='images/home-hero.png') }}"
+                    alt="Luxury modern living room interior"
+                    class="hero-interior-image"
+                >
+
+                <div class="hero-image-overlay"></div>
+
+
+                <div class="hero-image-badge hero-image-badge-top">
+
+                    <span>
+                        Premium Collection
+                    </span>
+
+                    <strong>
+                        Modern Luxury
+                    </strong>
+
+                </div>
+
+
+                <div class="hero-image-badge hero-image-badge-bottom">
+
+                    <span>
+                        InteriorSpace
+                    </span>
+
+                    <strong>
+                        Designed Around You
+                    </strong>
+
+                </div>
+
+
+                <div class="hero-image-number">
+
+                    <span>
+                        01
+                    </span>
+
+                    <p>
+                        Signature Interior
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LUXURY STATISTICS
+    ====================================================== -->
+
+    <section class="stats-section">
+
+        <article class="stats-card">
+
+            <h2>
+                250+
+            </h2>
+
+            <p>
+                Luxury Projects
+            </p>
+
+        </article>
+
+
+        <article class="stats-card">
+
+            <h2>
+                98%
+            </h2>
+
+            <p>
+                Happy Clients
+            </p>
+
+        </article>
+
+
+        <article class="stats-card">
+
+            <h2>
+                15+
+            </h2>
+
+            <p>
+                Years Experience
+            </p>
+
+        </article>
+
+
+        <article class="stats-card">
+
+            <h2>
+                40+
+            </h2>
+
+            <p>
+                Design Awards
+            </p>
+
+        </article>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FEATURED DESIGNS
+    ====================================================== -->
+
+    <section class="featured-designs-section">
+
+        <div class="featured-designs-heading">
+
+            <div>
+
+                <p class="section-label">
+                    Featured Collection
+                </p>
+
+                <h2>
+                    Recently Added Interior Designs
+                </h2>
+
+                <p>
+                    Explore selected concepts recently added by the
+                    InteriorSpace design team.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('gallery') }}"
+                class="text-link featured-view-all"
+            >
+                View All Designs
+                <span aria-hidden="true">→</span>
+            </a>
+
+        </div>
+
+
+        {% if featured_designs %}
+
+            <div class="featured-design-grid">
+
+                {% for design in featured_designs %}
+
+                    <article class="featured-design-card">
+
+                        <div class="featured-design-image">
+
+                            <img
+                                src="{{ url_for('static', filename='images/' + design.image) }}"
+                                alt="{{ design.title }}"
+                            >
+
+                            <span class="featured-design-category">
+                                {{ design.category }}
+                            </span>
+
+                            <div class="featured-design-overlay"></div>
+
+                        </div>
+
+
+                        <div class="featured-design-content">
+
+                            <p class="featured-design-number">
+                                0{{ loop.index }}
+                            </p>
+
+                            <h3>
+                                {{ design.title }}
+                            </h3>
+
+                            <p>
+                                {{ design.description[:115] }}
+
+                                {% if design.description|length > 115 %}
+                                    ...
+                                {% endif %}
+                            </p>
+
+                            <a
+                                href="{{ url_for('gallery') }}"
+                                class="featured-design-link"
+                            >
+                                View Design
+                                <span aria-hidden="true">→</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="featured-empty-state">
+
+                <p class="section-label">
+                    Collection Preparing
+                </p>
+
+                <h3>
+                    No featured designs are available yet.
+                </h3>
+
+                <p>
+                    Add interior designs from the Admin panel and they will
+                    automatically appear here.
+                </p>
+
+                {% if current_user.is_authenticated and current_user.role == "admin" %}
+
+                    <a
+                        href="{{ url_for('admin') }}"
+                        class="home-btn home-btn-primary"
+                    >
+                        Add a Design
+                        <span aria-hidden="true">→</span>
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{{ url_for('gallery') }}"
+                        class="home-btn home-btn-secondary"
+                    >
+                        Open Gallery
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- =====================================================
+         SERVICES SECTION
+    ====================================================== -->
+
+    <section class="features-section">
+
+        <div class="section-heading">
+
+            <p class="section-label">
+                Our Services
+            </p>
+
+            <h2>
+                Everything You Need to Design a Better Space
+            </h2>
+
+            <p>
+                Explore curated ideas, professional concepts and personalized
+                recommendations through one premium interior-design experience.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <!-- SERVICE 1 -->
+
+            <a
+                href="{{ url_for('gallery') }}"
+                class="feature-card-link"
+            >
+
+                <article class="feature-card clickable-feature-card">
+
+                    <div class="feature-icon">
+
+                        <span>
+                            01
+                        </span>
+
+                        🏠
+
+                    </div>
+
+                    <h3>
+                        Room Inspiration
+                    </h3>
+
+                    <p>
+                        Browse beautiful ideas for living rooms, bedrooms,
+                        kitchens, offices, and other spaces.
+                    </p>
+
+                    <div class="feature-action">
+
+                        Explore Gallery
+
+                        <span aria-hidden="true">
+                            →
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </a>
+
+
+            <!-- SERVICE 2 -->
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+
+                    <span>
+                        02
+                    </span>
+
+                    🎨
+
+                </div>
+
+                <h3>
+                    Professional Designs
+                </h3>
+
+                <p>
+                    Discover carefully selected styles created for modern
+                    homes and professional workplaces.
+                </p>
+
+                <div class="feature-action muted-action">
+
+                    Premium Concepts
+
+                    <span aria-hidden="true">
+                        ◆
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 3 -->
+
+            <a
+                href="{{ url_for('custom_request') }}"
+                class="feature-card-link"
+            >
+
+                <article class="feature-card clickable-feature-card">
+
+                    <div class="feature-icon">
+
+                        <span>
+                            03
+                        </span>
+
+                        📐
+
+                    </div>
+
+                    <h3>
+                        Custom Requests
+                    </h3>
+
+                    <p>
+                        Submit your room requirements and receive personalized
+                        interior design recommendations.
+                    </p>
+
+                    <div class="feature-action">
+
+                        Start a Request
+
+                        <span aria-hidden="true">
+                            →
+                        </span>
+
+                    </div>
+
+                </article>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SHOWCASE SECTION
+    ====================================================== -->
+
+    <section class="showcase-section">
+
+        <div class="showcase-copy">
+
+            <p class="section-label">
+                Crafted for Modern Living
+            </p>
+
+            <h2>
+                A darker, richer and more expressive design experience.
+            </h2>
+
+            <p>
+                InteriorSpace combines fluorescent white detail,
+                peacock-inspired colors and golden accents to create an
+                atmosphere that feels elegant, artistic and modern.
+            </p>
+
+            <a
+                href="{{ url_for('gallery') }}"
+                class="text-link"
+            >
+                Discover the collection
+
+                <span aria-hidden="true">
+                    →
+                </span>
+            </a>
+
+        </div>
+
+
+        <div class="showcase-panels">
+
+            <div class="showcase-panel panel-teal">
+
+                <span>
+                    01
+                </span>
+
+                <h3>
+                    Peacock Teal
+                </h3>
+
+                <p>
+                    Fresh, refined and contemporary.
+                </p>
+
+            </div>
+
+
+            <div class="showcase-panel panel-blue">
+
+                <span>
+                    02
+                </span>
+
+                <h3>
+                    Royal Blue
+                </h3>
+
+                <p>
+                    Confident depth for modern spaces.
+                </p>
+
+            </div>
+
+
+            <div class="showcase-panel panel-gold">
+
+                <span>
+                    03
+                </span>
+
+                <h3>
+                    Golden Finish
+                </h3>
+
+                <p>
+                    Warm luxury in every detail.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CALL TO ACTION
+    ====================================================== -->
+
+    <section class="cta-section">
+
+        <div class="cta-glow"></div>
+
+
+        <div>
+
+            <p class="section-label">
+                Start Your Journey
+            </p>
+
+            <h2>
+                Ready to Create Your Dream Interior?
+            </h2>
+
+            <p>
+                Create your InteriorSpace account and begin exploring
+                personalized designs.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('register') }}"
+            class="home-btn home-btn-light"
+        >
+
+            <span>
+                Register Now
+            </span>
+
+            <span aria-hidden="true">
+                →
+            </span>
+
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

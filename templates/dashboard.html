@@ -1,0 +1,557 @@
+{% extends "base.html" %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/dashboard.css') }}"
+>
+
+<style>
+    /* Apply the dark theme to shared base.html elements only on Dashboard */
+    body:has(.dashboard-theme-page) {
+        background: #020617;
+        color: #f8fafc;
+    }
+
+    body:has(.dashboard-theme-page) .site-header {
+        position: relative;
+        z-index: 100;
+        background: #020617;
+        border-bottom: 1px solid rgba(96, 165, 250, 0.18);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    body:has(.dashboard-theme-page) .navbar {
+        background: transparent;
+    }
+
+    body:has(.dashboard-theme-page) .logo {
+        color: #f8fafc;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a {
+        color: #cbd5e1;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a:hover {
+        color: #60a5fa;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a[href="{{ url_for('dashboard') }}"] {
+        color: #60a5fa;
+    }
+
+    body:has(.dashboard-theme-page) .nav-register {
+        color: #ffffff;
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+        box-shadow: 0 10px 24px rgba(37, 99, 235, 0.24);
+    }
+
+    body:has(.dashboard-theme-page) .nav-register:hover {
+        color: #ffffff;
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
+    }
+
+    body:has(.dashboard-theme-page) .menu-toggle {
+        color: #f8fafc;
+        border-color: rgba(96, 165, 250, 0.35);
+        background: #0f172a;
+    }
+
+    body:has(.dashboard-theme-page) main {
+        background: #020617;
+    }
+
+    body:has(.dashboard-theme-page) .site-footer {
+        color: #94a3b8;
+        border-top: 1px solid rgba(96, 165, 250, 0.16);
+        background: #020617;
+    }
+
+    body:has(.dashboard-theme-page) .flash-container {
+        background: #020617;
+    }
+
+    /* Animated dashboard navigation buttons */
+    body:has(.dashboard-theme-page) .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 10px 15px;
+        overflow: hidden;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        color: #cbd5e1;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        text-decoration: none;
+        background: rgba(15, 23, 42, 0.42);
+        transition:
+            transform 0.28s ease,
+            color 0.28s ease,
+            border-color 0.28s ease,
+            background 0.28s ease,
+            box-shadow 0.28s ease;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -130%;
+        width: 75%;
+        height: 100%;
+        transform: skewX(-22deg);
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.18),
+            transparent
+        );
+        transition: left 0.55s ease;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 5px;
+        width: 0;
+        height: 2px;
+        border-radius: 999px;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, #2563eb, #60a5fa);
+        box-shadow: 0 0 10px rgba(96, 165, 250, 0.65);
+        transition: width 0.28s ease;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a:hover {
+        color: #ffffff;
+        transform: translateY(-3px);
+        border-color: rgba(96, 165, 250, 0.36);
+        background: linear-gradient(
+            135deg,
+            rgba(30, 64, 175, 0.42),
+            rgba(37, 99, 235, 0.18)
+        );
+        box-shadow:
+            0 12px 26px rgba(0, 0, 0, 0.28),
+            0 0 18px rgba(59, 130, 246, 0.15);
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a:hover::before {
+        left: 150%;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a:hover::after {
+        width: 62%;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a:active {
+        transform: translateY(0) scale(0.97);
+    }
+
+    /* Current dashboard button */
+    body:has(.dashboard-theme-page) .nav-links a[href="{{ url_for('dashboard') }}"] {
+        color: #ffffff;
+        border-color: rgba(96, 165, 250, 0.44);
+        background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        box-shadow:
+            0 10px 24px rgba(37, 99, 235, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16);
+        animation: dashboardNavPulse 2.6s ease-in-out infinite;
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a[href="{{ url_for('dashboard') }}"]::after {
+        width: 64%;
+    }
+
+    /* Admin button */
+    body:has(.dashboard-theme-page) .nav-links a[href="{{ url_for('admin') }}"] {
+        border-color: rgba(139, 92, 246, 0.24);
+    }
+
+    body:has(.dashboard-theme-page) .nav-links a[href="{{ url_for('admin') }}"]:hover {
+        border-color: rgba(167, 139, 250, 0.5);
+        background: linear-gradient(
+            135deg,
+            rgba(91, 33, 182, 0.48),
+            rgba(37, 99, 235, 0.22)
+        );
+        box-shadow:
+            0 12px 28px rgba(0, 0, 0, 0.28),
+            0 0 20px rgba(139, 92, 246, 0.18);
+    }
+
+    /* Home button */
+    body:has(.dashboard-theme-page) .nav-links a[href="{{ url_for('home') }}"]:hover {
+        border-color: rgba(34, 211, 238, 0.42);
+        background: linear-gradient(
+            135deg,
+            rgba(8, 145, 178, 0.35),
+            rgba(37, 99, 235, 0.18)
+        );
+        box-shadow:
+            0 12px 28px rgba(0, 0, 0, 0.28),
+            0 0 20px rgba(34, 211, 238, 0.13);
+    }
+
+    /* Logout remains a strong action button */
+    body:has(.dashboard-theme-page) .nav-links .nav-register {
+        min-height: 42px;
+        padding: 10px 18px;
+        color: #ffffff;
+        border-color: rgba(96, 165, 250, 0.42);
+        border-radius: 12px;
+        background: linear-gradient(135deg, #1e3a8a, #2563eb);
+        box-shadow:
+            0 10px 24px rgba(37, 99, 235, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    body:has(.dashboard-theme-page) .nav-links .nav-register:hover {
+        color: #ffffff;
+        transform: translateY(-3px) scale(1.03);
+        background: linear-gradient(135deg, #2563eb, #60a5fa);
+        box-shadow:
+            0 16px 34px rgba(37, 99, 235, 0.35),
+            0 0 20px rgba(96, 165, 250, 0.2);
+    }
+
+    @keyframes dashboardNavPulse {
+        0%, 100% {
+            box-shadow:
+                0 10px 24px rgba(37, 99, 235, 0.3),
+                0 0 0 0 rgba(59, 130, 246, 0.18);
+        }
+
+        50% {
+            box-shadow:
+                0 14px 30px rgba(37, 99, 235, 0.4),
+                0 0 0 7px rgba(59, 130, 246, 0);
+        }
+    }
+
+    @media (max-width: 900px) {
+        body:has(.dashboard-theme-page) .nav-links {
+            gap: 7px;
+        }
+
+        body:has(.dashboard-theme-page) .nav-links a {
+            min-height: 39px;
+            padding: 9px 11px;
+            font-size: 0.9rem;
+        }
+    }
+
+</style>
+{% endblock %}
+
+{% block title %}
+Dashboard | InteriorSpace
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-theme-page">
+
+<section class="customer-dashboard-hero">
+    <div class="customer-dashboard-hero-content">
+        <div>
+            <p class="dashboard-eyebrow">My InteriorSpace</p>
+            <h1>Welcome back, {{ current_user.name }}</h1>
+            <p>
+                Explore inspiring designs and track every custom request
+                from submission to the final decision.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('custom_request') }}"
+            class="dashboard-primary-action"
+        >
+            <span>＋</span>
+            New Design Request
+        </a>
+    </div>
+</section>
+
+<section class="customer-dashboard-page">
+
+    <div class="dashboard-profile-card">
+
+        <div class="dashboard-avatar">
+            {{ current_user.name[0]|upper }}
+        </div>
+
+        <div>
+            <p class="dashboard-profile-label">Account</p>
+            <h2>{{ current_user.name }}</h2>
+            <p>{{ current_user.email }}</p>
+        </div>
+
+        <span class="dashboard-role-badge">
+            {{ current_user.role|title }}
+        </span>
+
+    </div>
+
+    <div class="dashboard-stat-grid">
+
+        <article class="dashboard-stat-card">
+            <div class="dashboard-stat-icon">📋</div>
+            <div>
+                <span>Total Requests</span>
+                <strong>{{ request_counts.total }}</strong>
+            </div>
+        </article>
+
+        <article class="dashboard-stat-card">
+            <div class="dashboard-stat-icon pending-icon">⏳</div>
+            <div>
+                <span>Pending</span>
+                <strong>{{ request_counts.pending }}</strong>
+            </div>
+        </article>
+
+        <article class="dashboard-stat-card">
+            <div class="dashboard-stat-icon accepted-icon">✓</div>
+            <div>
+                <span>Accepted</span>
+                <strong>{{ request_counts.accepted }}</strong>
+            </div>
+        </article>
+
+        <article class="dashboard-stat-card">
+            <div class="dashboard-stat-icon rejected-icon">✕</div>
+            <div>
+                <span>Rejected</span>
+                <strong>{{ request_counts.rejected }}</strong>
+            </div>
+        </article>
+
+    </div>
+
+    <div class="dashboard-section-header">
+
+        <div>
+            <p class="dashboard-eyebrow">Request Tracking</p>
+            <h2>My Design Requests</h2>
+            <p>
+                Requests submitted using your account email appear here.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('gallery') }}"
+            class="dashboard-secondary-action"
+        >
+            Browse Gallery →
+        </a>
+
+    </div>
+
+    {% if customer_requests %}
+
+        <div class="customer-request-timeline">
+
+            {% for item in customer_requests %}
+
+                <article class="customer-request-card">
+
+                    <div class="customer-request-card-top">
+
+                        <div>
+                            <p class="customer-request-number">
+                                Request #{{ "%04d"|format(item.id) }}
+                            </p>
+                            <h3>
+                                {{ item.room_type }} — {{ item.preferred_style }}
+                            </h3>
+                            <p class="customer-request-date">
+                                Submitted
+                                {{ item.created_at.strftime("%d %B %Y") }}
+                            </p>
+                        </div>
+
+                        <span
+                            class="customer-status-badge
+                                   customer-status-{{ item.status|lower }}"
+                        >
+                            {% if item.status == "Accepted" %}
+                                ✓ Accepted
+                            {% elif item.status == "Rejected" %}
+                                ✕ Rejected
+                            {% else %}
+                                ⏳ Pending
+                            {% endif %}
+                        </span>
+
+                    </div>
+
+                    <div class="customer-request-progress">
+
+                        <div class="progress-step completed">
+                            <span>1</span>
+                            <p>Submitted</p>
+                        </div>
+
+                        <div
+                            class="progress-line
+                            {% if item.status != 'Pending' %}completed-line{% endif %}"
+                        ></div>
+
+                        <div
+                            class="progress-step
+                            {% if item.status != 'Pending' %}completed{% endif %}"
+                        >
+                            <span>2</span>
+                            <p>Reviewed</p>
+                        </div>
+
+                        <div
+                            class="progress-line
+                            {% if item.status == 'Accepted' %}completed-line{% endif %}"
+                        ></div>
+
+                        <div
+                            class="progress-step
+                            {% if item.status == 'Accepted' %}completed{% endif %}
+                            {% if item.status == 'Rejected' %}rejected-step{% endif %}"
+                        >
+                            <span>
+                                {% if item.status == "Rejected" %}✕{% else %}3{% endif %}
+                            </span>
+                            <p>
+                                {% if item.status == "Rejected" %}
+                                    Rejected
+                                {% else %}
+                                    Accepted
+                                {% endif %}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="customer-request-details-grid">
+
+                        <div>
+                            <span>Room Type</span>
+                            <strong>{{ item.room_type }}</strong>
+                        </div>
+
+                        <div>
+                            <span>Preferred Style</span>
+                            <strong>{{ item.preferred_style }}</strong>
+                        </div>
+
+                        <div>
+                            <span>Estimated Budget</span>
+                            <strong>{{ item.budget or "Not provided" }}</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="customer-request-description">
+                        <h4>Your Requirements</h4>
+                        <p>{{ item.requirements }}</p>
+                    </div>
+
+                    {% if item.response and item.response.admin_message %}
+
+                        <div
+                            class="admin-response-box
+                            {% if item.status == 'Rejected' %}
+                                admin-response-rejected
+                            {% endif %}"
+                        >
+                            <div class="admin-response-icon">
+                                {% if item.status == "Rejected" %}✕{% else %}✓{% endif %}
+                            </div>
+
+                            <div>
+                                <p class="admin-response-label">
+                                    Message from InteriorSpace
+                                </p>
+                                <p>{{ item.response.admin_message }}</p>
+                            </div>
+                        </div>
+
+                    {% elif item.status == "Accepted" %}
+
+                        <div class="admin-response-box">
+                            <div class="admin-response-icon">✓</div>
+                            <div>
+                                <p class="admin-response-label">
+                                    Request Accepted
+                                </p>
+                                <p>
+                                    Your request has been accepted. Our design
+                                    team will contact you soon.
+                                </p>
+                            </div>
+                        </div>
+
+                    {% elif item.status == "Rejected" %}
+
+                        <div class="admin-response-box admin-response-rejected">
+                            <div class="admin-response-icon">✕</div>
+                            <div>
+                                <p class="admin-response-label">
+                                    Request Rejected
+                                </p>
+                                <p>
+                                    Your request could not be accepted at this
+                                    time. You may submit a revised request.
+                                </p>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="pending-response-box">
+                            <span>⏳</span>
+                            <p>
+                                Your request is waiting for administrator review.
+                            </p>
+                        </div>
+
+                    {% endif %}
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="dashboard-empty-state">
+            <div class="dashboard-empty-icon">📐</div>
+            <h3>No design requests yet</h3>
+            <p>
+                Submit your first custom request and track its progress here.
+            </p>
+            <a
+                href="{{ url_for('custom_request') }}"
+                class="dashboard-primary-action"
+            >
+                Create Your First Request
+            </a>
+        </div>
+
+    {% endif %}
+
+</section>
+
+</div>
+
+{% endblock %}

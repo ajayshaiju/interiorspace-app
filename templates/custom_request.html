@@ -1,0 +1,542 @@
+{% extends "base.html" %}
+
+{% block title %}
+Custom Request | InteriorSpace
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for(
+        'static',
+        filename='css/custom_request.css'
+    ) }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="custom-request-page">
+
+    <!-- =========================================
+         HERO SECTION
+    ========================================== -->
+
+    <section class="custom-request-hero">
+
+        <div class="custom-request-hero-overlay"></div>
+
+        <div class="custom-request-hero-content">
+
+            <p class="custom-request-eyebrow">
+                Personalized Interior Design
+            </p>
+
+            <h1>
+                Tell Us About Your Dream Space
+            </h1>
+
+            <p>
+                Share your room details, preferred style, budget,
+                requirements, and creative ideas. Our design team will
+                review your request and help you create a space that
+                matches your vision.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         MAIN REQUEST SECTION
+    ========================================== -->
+
+    <section class="custom-request-section">
+
+        <div class="custom-request-layout">
+
+
+            <!-- =====================================
+                 LEFT INFORMATION PANEL
+            ====================================== -->
+
+            <aside class="custom-request-info">
+
+                <p class="custom-request-small-label">
+                    How It Works
+                </p>
+
+                <h2>
+                    Your Ideas, Our Design Expertise
+                </h2>
+
+                <p class="custom-request-info-description">
+                    Complete the form with as much information as possible.
+                    This helps us understand your style, room requirements,
+                    preferences, and estimated budget.
+                </p>
+
+
+                <!-- Statistics Cards -->
+
+                <div class="custom-request-stats">
+
+                    <div class="stat-box">
+
+                        <h3>
+                            500+
+                        </h3>
+
+                        <p>
+                            Projects Completed
+                        </p>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <h3>
+                            98%
+                        </h3>
+
+                        <p>
+                            Happy Clients
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step One -->
+
+                <div class="custom-request-step">
+
+                    <div class="custom-request-step-icon">
+                        1
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Share Your Room Details
+                        </h3>
+
+                        <p>
+                            Select the room type and tell us about the
+                            size, furniture, colours, and lighting.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step Two -->
+
+                <div class="custom-request-step">
+
+                    <div class="custom-request-step-icon">
+                        2
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Choose Your Style
+                        </h3>
+
+                        <p>
+                            Select a preferred interior style that matches
+                            your taste and personality.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Step Three -->
+
+                <div class="custom-request-step">
+
+                    <div class="custom-request-step-icon">
+                        3
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Submit Your Request
+                        </h3>
+
+                        <p>
+                            Our administrator will review your request and
+                            update its status.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Information Note -->
+
+                <div class="custom-request-note">
+
+                    <span class="custom-request-note-icon">
+                        💡
+                    </span>
+
+                    <p>
+                        Include detailed information for a more accurate and
+                        personalized design recommendation.
+                    </p>
+
+                </div>
+
+
+                <!-- Designer Quote -->
+
+                <div class="designer-quote">
+
+                    <h4>
+                        Design Philosophy
+                    </h4>
+
+                    <p>
+                        “Great interiors do not simply decorate a room.
+                        They create meaningful experiences, express your
+                        personality, and elevate everyday living.”
+                    </p>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =====================================
+                 RIGHT FORM PANEL
+            ====================================== -->
+
+            <div class="custom-request-form-card">
+
+                <div class="custom-request-form-heading">
+
+                    <p class="custom-request-small-label">
+                        Request Form
+                    </p>
+
+                    <h2>
+                        Submit Your Requirements
+                    </h2>
+
+                    <p>
+                        Fields marked with an asterisk are required.
+                    </p>
+
+                </div>
+
+
+                <form
+                    method="post"
+                    action="{{ url_for('custom_request') }}"
+                    class="custom-request-form"
+                >
+
+
+                    <!-- Name and Email -->
+
+                    <div class="custom-form-row">
+
+                        <div class="custom-form-group">
+
+                            <label for="name">
+                                Full Name
+                                <span>*</span>
+                            </label>
+
+                            <div class="custom-input-wrapper">
+
+                                <span class="custom-input-icon">
+                                    👤
+                                </span>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Enter your full name"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="custom-form-group">
+
+                            <label for="email">
+                                Email Address
+                                <span>*</span>
+                            </label>
+
+                            <div class="custom-input-wrapper">
+
+                                <span class="custom-input-icon">
+                                    ✉
+                                </span>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter your email address"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Room Type and Design Style -->
+
+                    <div class="custom-form-row">
+
+                        <div class="custom-form-group">
+
+                            <label for="room_type">
+                                Room Type
+                                <span>*</span>
+                            </label>
+
+                            <div class="custom-input-wrapper">
+
+                                <span class="custom-input-icon">
+                                    🏠
+                                </span>
+
+                                <select
+                                    id="room_type"
+                                    name="room_type"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select room type
+                                    </option>
+
+                                    <option value="Living Room">
+                                        Living Room
+                                    </option>
+
+                                    <option value="Bedroom">
+                                        Bedroom
+                                    </option>
+
+                                    <option value="Kitchen">
+                                        Kitchen
+                                    </option>
+
+                                    <option value="Dining Room">
+                                        Dining Room
+                                    </option>
+
+                                    <option value="Office">
+                                        Office
+                                    </option>
+
+                                    <option value="Bathroom">
+                                        Bathroom
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="custom-form-group">
+
+                            <label for="preferred_style">
+                                Preferred Design Style
+                                <span>*</span>
+                            </label>
+
+                            <div class="custom-input-wrapper">
+
+                                <span class="custom-input-icon">
+                                    🎨
+                                </span>
+
+                                <select
+                                    id="preferred_style"
+                                    name="preferred_style"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select design style
+                                    </option>
+
+                                    <option value="Modern">
+                                        Modern
+                                    </option>
+
+                                    <option value="Minimalist">
+                                        Minimalist
+                                    </option>
+
+                                    <option value="Traditional">
+                                        Traditional
+                                    </option>
+
+                                    <option value="Luxury">
+                                        Luxury
+                                    </option>
+
+                                    <option value="Industrial">
+                                        Industrial
+                                    </option>
+
+                                    <option value="Scandinavian">
+                                        Scandinavian
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Budget -->
+
+                    <div class="custom-form-group">
+
+                        <label for="budget">
+                            Estimated Budget
+                        </label>
+
+                        <div class="custom-input-wrapper">
+
+                            <span class="custom-input-icon">
+                                ₹
+                            </span>
+
+                            <input
+                                type="text"
+                                id="budget"
+                                name="budget"
+                                placeholder="Example: ₹50,000 – ₹1,00,000"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Requirements -->
+
+                    <div class="custom-form-group">
+
+                        <label for="requirements">
+                            Your Requirements
+                            <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="requirements"
+                            name="requirements"
+                            rows="6"
+                            placeholder="Describe your room size, preferred colours, furniture requirements, lighting needs, storage needs, and other details..."
+                            required
+                        ></textarea>
+
+                        <small class="custom-field-help">
+                            Add room dimensions, colour preferences, furniture,
+                            storage requirements, and lighting ideas.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Creative Suggestions -->
+
+                    <div class="custom-form-group">
+
+                        <label for="suggestions">
+                            Suggestions or Creative Ideas
+                        </label>
+
+                        <textarea
+                            id="suggestions"
+                            name="suggestions"
+                            rows="5"
+                            placeholder="Share colour combinations, themes, inspirations, materials, or other creative ideas..."
+                        ></textarea>
+
+                        <small class="custom-field-help">
+                            This field is optional.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Submit Area -->
+
+                    <div class="custom-request-submit-area">
+
+                        <p>
+                            By submitting this form, your request will be sent
+                            to the InteriorSpace administrator for review.
+                        </p>
+
+                        <button
+                            type="submit"
+                            class="custom-request-submit-button"
+                        >
+
+                            <span>
+                                Submit Design Request
+                            </span>
+
+                            <span class="custom-submit-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Gallery | InteriorSpace
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/gallery.css') }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="gallery-page">
+
+    <!-- =====================================================
+         GALLERY BANNER
+    ====================================================== -->
+
+    <section class="page-banner">
+
+        <div class="page-banner-overlay"></div>
+
+        <div class="page-banner-content">
+
+            <p class="section-label">
+                Design Collection
+            </p>
+
+            <h1>
+                Interior Design Gallery
+            </h1>
+
+            <p>
+                Explore elegant interior styles created for living rooms,
+                bedrooms, kitchens, offices and modern spaces.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         GALLERY COLLECTION
+    ====================================================== -->
+
+    <section class="gallery-section">
+
+        <div class="gallery-heading">
+
+            <div class="gallery-heading-content">
+
+                <p class="section-label">
+                    Premium Interiors
+                </p>
+
+                <h2>
+                    Explore Our Latest Designs
+                </h2>
+
+                <p>
+                    Browse professionally curated interior concepts and
+                    discover inspiration for your next project.
+                </p>
+
+            </div>
+
+
+            <div class="gallery-design-count">
+
+                <strong>
+                    {{ designs|length }}
+                </strong>
+
+                <span>
+                    Designs Available
+                </span>
+
+            </div>
+
+        </div>
+
+
+        {% if designs %}
+
+            <div class="design-grid">
+
+                {% for design in designs %}
+
+                    <a
+                        href="{{ url_for('design_details', design_id=design.id) }}"
+                        class="design-card-link"
+                    >
+
+                        <article class="design-card">
+
+                            <div class="design-image-container">
+
+                                <img
+                                    src="{{ url_for('static', filename='images/' + design.image) }}"
+                                    alt="{{ design.title }}"
+                                    class="design-image"
+                                >
+
+                                <div class="design-image-overlay"></div>
+
+                                <span class="design-category">
+                                    {{ design.category }}
+                                </span>
+
+                                <div class="design-number">
+
+                                    {% if loop.index < 10 %}
+                                        0{{ loop.index }}
+                                    {% else %}
+                                        {{ loop.index }}
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="design-card-content">
+
+                                <h2>
+                                    {{ design.title }}
+                                </h2>
+
+                                <p>
+                                    {{ design.description[:140] }}
+
+                                    {% if design.description|length > 140 %}
+                                        ...
+                                    {% endif %}
+                                </p>
+
+                                <div class="view-design-text">
+
+                                    <span>
+                                        View Full Design
+                                    </span>
+
+                                    <span aria-hidden="true">
+                                        →
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="gallery-empty-state">
+
+                <div class="gallery-empty-icon">
+                    ◇
+                </div>
+
+                <p class="section-label">
+                    Collection Empty
+                </p>
+
+                <h2>
+                    No Interior Designs Available
+                </h2>
+
+                <p>
+                    Interior designs added through the Admin Dashboard
+                    will automatically appear in this gallery.
+                </p>
+
+
+                {% if current_user.is_authenticated and current_user.role == "admin" %}
+
+                    <a
+                        href="{{ url_for('admin') }}"
+                        class="gallery-empty-button"
+                    >
+                        Add First Design
+                        <span aria-hidden="true">→</span>
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{{ url_for('home') }}"
+                        class="gallery-empty-button"
+                    >
+                        Return Home
+                        <span aria-hidden="true">→</span>
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+{% endblock %}
