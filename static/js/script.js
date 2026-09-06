@@ -35,14 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", closeMobileMenu);
     });
 
-    document.addEventListener("click", (event) => {
-        const clickedMenu = navLinks.contains(event.target);
-        const clickedButton = menuToggle.contains(event.target);
+   document.addEventListener("click", (event) => {
+    const clickedMenu = navLinks.contains(event.target);
+    const clickedButton = menuToggle.contains(event.target);
 
-        if (!clickedMenu && !clickedButton) {
-            closeMobileMenu();
-        }
-    });
+    if (!clickedMenu && !clickedButton) {
+        closeMobileMenu();
+    }
+}, true);
 
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
